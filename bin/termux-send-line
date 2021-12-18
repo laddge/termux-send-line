@@ -1,0 +1,29 @@
+#!bash
+if [ -p /dev/stdin ]; then
+    input=$(cat)
+else
+    case "$#" in
+        0)
+            input=$(cat)
+            ;;
+        1)
+            input=$1
+            ;;
+        *)
+            echo 'Invalid args'
+            exit 1
+            ;;
+    esac
+fi
+text=""
+i=0
+for (( i=0 ; i<${#input} ; i++ )); do
+    o=""
+    c=${input:$i:1}
+    case "$c" in
+        [-_.~a-zA-Z0-9] ) o="${c}" ;;
+        * ) printf -v o '%%%02x' "'$c"
+    esac
+    text+=$o
+done
+am start "intent://share?text=$text#Intent;scheme=line;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=jp.naver.line.android;end" > /dev/null
