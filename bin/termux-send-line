@@ -1,4 +1,4 @@
-#!bash
+#!/data/data/com.termux/files/usr/bin/bash
 if [ -p /dev/stdin ]; then
     input=$(cat)
 else
