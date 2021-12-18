@@ -15,5 +15,9 @@ else
             ;;
     esac
 fi
+if [ -z "$input" ]; then
+    echo 'Empty text'
+    exit 1
+fi
 text=$(echo -n "$input" | python3 -c "import urllib.parse as up; import sys; print(up.quote(sys.stdin.read()))")
 am start "intent://share?text=$text#Intent;scheme=line;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=jp.naver.line.android;end" > /dev/null
